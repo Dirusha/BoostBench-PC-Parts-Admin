@@ -22,7 +22,7 @@ const authSlice = createSlice({
       state.id = null;
       state.username = null;
       state.roles = [];
-      sessionStorage.removeItem("authToken");
+      localStorage.removeItem("authState"); // Clear localStorage on logout
     },
   },
 });

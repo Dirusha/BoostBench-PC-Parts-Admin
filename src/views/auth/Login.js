@@ -1,6 +1,7 @@
 import { setAuth } from "features/auth/authSlice";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import apiService from "services/apiService";
 
@@ -11,6 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,15 +24,20 @@ export default function Login() {
         username,
         password,
       });
-      dispatch(setAuth(response)); // Dispatch to Redux
-      sessionStorage.setItem("authToken", response.token);
-      // TODO: Redirect to dashboard or protected route
+      dispatch(setAuth(response)); // This will trigger localStorage update via store.subscribe
+      history.push("/admin/dashboard"); // Redirect to admin dashboard
     } catch (err) {
       setError(err);
     } finally {
       setIsLoading(false);
     }
   };
+
+  // Redirect if already logged in
+  if (token) {
+    history.push("/admin/dashboard");
+    return null;
+  }
 
   return (
     <>
