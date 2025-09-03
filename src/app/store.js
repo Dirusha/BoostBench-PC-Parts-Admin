@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
+import productReducer from "../features/products/productSlice";
 
 const persistedState = localStorage.getItem("authState")
   ? JSON.parse(localStorage.getItem("authState"))
@@ -13,6 +14,7 @@ const persistedState = localStorage.getItem("authState")
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    products: productReducer,
   },
   preloadedState: {
     auth: persistedState.auth || {

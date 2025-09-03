@@ -14,13 +14,18 @@ const fetchWithErrorHandling = async (url, options) => {
 };
 
 const apiService = {
+  get: (url, options = {}) =>
+    fetchWithErrorHandling(url, {
+      method: "GET",
+      ...options,
+    }),
   post: (url, data) =>
     fetchWithErrorHandling(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     }),
-  // Add get, put, etc.
+  // Add put, delete, etc. as needed
 };
 
 export default apiService;
